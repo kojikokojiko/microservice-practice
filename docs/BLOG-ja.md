@@ -1023,6 +1023,4 @@ Rust で実装したことで、**型安全性**と**パフォーマンス**の�
 
 ## 参考リソース
 
-- [プロジェクトリポジトリ](https://github.com/your-org/microservice-practice)
-- [クイックスタートガイド](./QUICKSTART-ja.md)
-- [仕様書](./SPEC.ja.md)
+- [プロジェクトリポジトリ](https://github.com/kojikokojiko/microservice-practice)
