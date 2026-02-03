@@ -1,0 +1,35 @@
+FROM rust:1-bookworm AS builder
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y libpq-dev pkg-config && rm -rf /var/lib/apt/lists/*
+
+# Copy dependency files first for better caching
+COPY Cargo.toml Cargo.lock ./
+COPY shared/Cargo.toml ./shared/
+COPY admin-service/Cargo.toml ./admin-service/
+COPY teacher-service/Cargo.toml ./teacher-service/
+COPY student-service/Cargo.toml ./student-service/
+
+# Build dependencies first (cached layer)
+RUN mkdir -p shared/src admin-service/src teacher-service/src student-service/src && \
+    echo "pub fn dummy() {}" > shared/src/lib.rs && \
+    echo "fn main() {}" > admin-service/src/main.rs && \
+    echo "fn main() {}" > teacher-service/src/main.rs && \
+    echo "fn main() {}" > student-service/src/main.rs && \
+    cargo build --release -p student-service || true
+
+# Copy actual source code
+COPY shared ./shared
+COPY admin-service ./admin-service
+COPY teacher-service ./teacher-service
+COPY student-service ./student-service
+
+RUN touch shared/src/lib.rs student-service/src/main.rs && \
+    RUST_BACKTRACE=1 cargo build --release -p student-service || exit 1
+RUN test -f /app/target/release/student-service || (echo "Binary not found!" && ls -la /app/target/release/ && exit 1)
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y ca-certificates libssl3 && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /app/target/release/student-service /usr/local/bin/
+EXPOSE 8080
+ENTRYPOINT ["/usr/local/bin/student-service"]

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: student-service-config
+  namespace: edu
+data:
+  SERVICE_NAME: student-service
+  HTTP_PORT: "8080"
+  RUST_LOG: info
+  ADMIN_SERVICE_URL: http://admin-service:8080
+  TEACHER_SERVICE_URL: http://teacher-service:8080

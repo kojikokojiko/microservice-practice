@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: edu-ingress
+  namespace: edu
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /api/admin
+            pathType: Prefix
+            backend:
+              service:
+                name: admin-service
+                port:
+                  number: 8080
+          - path: /api/teacher
+            pathType: Prefix
+            backend:
+              service:
+                name: teacher-service
+                port:
+                  number: 8080
+          - path: /api/student
+            pathType: Prefix
+            backend:
+              service:
+                name: student-service
+                port:
+                  number: 8080
+  # TLS optional for MVP

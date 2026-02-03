@@ -1,0 +1,86 @@
+# Rust
+target/
+**/*.rs.bk
+*.pdb
+
+# Cargo
+Cargo.lock  # アプリケーションの場合は含めるが、念のためコメントアウト
+# ライブラリの場合は Cargo.lock を除外する場合は上記を有効化
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# Kubernetes secrets (本番用の機密情報)
+# 注意: サンプル用の secret.yaml は含めているが、
+# 本番環境のシークレットファイルは別途管理すること
+# k8s/*-secret-prod.yaml
+# k8s/secrets/
+
+# Docker
+.dockerignore.bak
+
+# Build artifacts
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Coverage reports
+tarpaulin-report.html
+coverage/
+*.gcda
+*.gcno
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Local development
+.local/
+local/
+*.local.yaml
+*.local.yml
+
+# Backup files
+*.orig
+*~

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: migrations-sql
+  namespace: edu
+data:
+  001_create_schemas.sql: |
+    CREATE SCHEMA IF NOT EXISTS admin;
+    CREATE SCHEMA IF NOT EXISTS teacher;
+    CREATE SCHEMA IF NOT EXISTS student;
+  002_admin_courses.sql: |
+    CREATE TABLE IF NOT EXISTS admin.courses (
+      id UUID PRIMARY KEY,
+      name TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  003_teacher_assignments.sql: |
+    CREATE TABLE IF NOT EXISTS teacher.assignments (
+      id UUID PRIMARY KEY,
+      course_id UUID NOT NULL,
+      title TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  004_student_submissions.sql: |
+    CREATE TABLE IF NOT EXISTS student.submissions (
+      id UUID PRIMARY KEY,
+      assignment_id UUID NOT NULL,
+      student_id TEXT NOT NULL,
+      content TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );

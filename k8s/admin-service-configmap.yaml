@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admin-service-config
+  namespace: edu
+data:
+  SERVICE_NAME: admin-service
+  HTTP_PORT: "8080"
+  RUST_LOG: info
+  # DB host for non-sensitive; full URL in Secret
+  ADMIN_SERVICE_URL: http://admin-service:8080
+  TEACHER_SERVICE_URL: http://teacher-service:8080
